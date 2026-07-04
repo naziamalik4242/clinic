@@ -1,0 +1,22 @@
+{
+  "aftercare_directives": [
+    {
+      "treatment_id": "tx_laser",
+      "immediate_actions": [
+        "Apply pure soothing Aloe Vera gel layer matrix every 4 hours if warm sensation persists.",
+        "Strictly avoid hot showers, steam saunas, or intense workout routines for the initial 24 hours."
+      ],
+      "sun_protection": "Apply broad-spectrum mineral SPF 50+ tracking compound every 2 hours outdoors.",
+      "contraindications": "Do not pick, scratch, or forcefully exfoliate treated skin areas under any circumstances."
+    },
+    {
+      "treatment_id": "tx_peel",
+      "immediate_actions": [
+        "Use only the provided gentle non-soap facial cleansers over the peeling duration cycle.",
+        "Keep skin layer margins saturated using intense hydrating epidermal lipid barriers creams."
+      ],
+      "sun_protection": "Absolute zero direct UV sun exposure for 7 days post-peel application framework.",
+      "contraindications": "Never manually peel or pull away loose skin flaking sections to protect against scarring vectors."
+    }
+  ]
+}

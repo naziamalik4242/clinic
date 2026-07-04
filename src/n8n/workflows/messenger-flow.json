@@ -1,0 +1,42 @@
+{
+  "name": "AI-Receptionist: Messenger Platform Pipeline",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "v1/webhook/messenger",
+        "options": {}
+      },
+      "id": "node_msg_webhook",
+      "name": "Meta Messenger Webhook Inbound",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [150, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/api/v1/chat/incoming",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "phone", "value": "={{ $json.body.entry[0].messaging[0].sender.id }}" },
+            { "name": "message", "value": "={{ $json.body.entry[0].messaging[0].message.text }}" },
+            { "name": "platform", "value": "MESSENGER" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node_msg_engine",
+      "name": "Cognitive Core Analysis",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [400, 200]
+    }
+  ],
+  "connections": {
+    "Meta Messenger Webhook Inbound": {
+      "main": [[{ "node": "Cognitive Core Analysis", "type": "main", "index": 0 }]]
+    }
+  }
+}

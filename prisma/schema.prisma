@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+  DOCTOR
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  appointments Appointment[] @relation("UserAppointments")
+}
+
+model Appointment {
+  id              String            @id @default(uuid())
+  userId          String
+  patientName     String
+  patientPhone    String
+  appointmentTime DateTime
+  status          AppointmentStatus @default(PENDING)
+  notes           String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  // Google Calendar Integration Tracking
+  googleEventId   String?           @unique
+
+  // Relations
+  user            User              @relation("UserAppointments", fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ChatLog {
+  id           String   @id @default(uuid())
+  waId         String   // WhatsApp Business ID of the patient
+  phoneNumber  String
+  messageBody  String
+  direction    String   // "inbound" (patient to bot) or "outbound" (bot to patient)
+  timestamp    DateTime @default(now())
+}
+
+model SystemSetting {
+  id    String @id @default(uuid())
+  key   String @unique
+  value String
+}

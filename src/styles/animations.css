@@ -1,0 +1,33 @@
+@keyframes glassPulse {
+  0%, 100% { backdrop-filter: blur(20px) saturate(100%); }
+  50% { backdrop-filter: blur(24px) saturate(130%); }
+}
+
+@keyframes textGlowFade {
+  0% { text-shadow: 0 0 0px rgba(255,255,255,0); }
+  50% { text-shadow: 0 0 12px rgba(212, 175, 55, 0.25); }
+  100% { text-shadow: 0 0 0px rgba(255,255,255,0); }
+}
+
+@keyframes slideUpSmooth {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-premium-glass {
+  animation: glassPulse 6s ease-in-out infinite;
+}
+
+.animate-text-luxury {
+  animation: textGlowFade 4s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slideUpSmooth 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

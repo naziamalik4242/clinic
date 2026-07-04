@@ -1,0 +1,29 @@
+.premium-layout-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.luxury-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01);
+}
+
+.dark .luxury-card:hover {
+  border-color: rgba(212, 175, 55, 0.15);
+  box-shadow: 0 10px 40px var(--glow);
+  transform: translateY(-2px);
+}
+
+.metric-scaler-value {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 2.25rem;
+  font-weight: 300;
+  letter-spacing: -0.05em;
+  color: hsl(var(--foreground));
+}

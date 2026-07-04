@@ -1,0 +1,32 @@
+@import './theme.css';
+@import './animations.css';
+@import './dashboard.css';
+@import './chat.css';
+
+@import "tailwindcss/preflight";
+@tailwind utilities;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+}
+
+/* Global design element decorators */
+.glass-panel-blur {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #fff 30%, #d4af37 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

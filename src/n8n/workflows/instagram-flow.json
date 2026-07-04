@@ -1,0 +1,42 @@
+{
+  "name": "AI-Receptionist: Instagram DM Platform Pipeline",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "v1/webhook/instagram",
+        "options": {}
+      },
+      "id": "node_ig_webhook",
+      "name": "Instagram Direct Inbound Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [150, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/api/v1/chat/incoming",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "phone", "value": "={{ $json.body.entry[0].messaging[0].sender.id }}" },
+            { "name": "message", "value": "={{ $json.body.entry[0].messaging[0].message.text }}" },
+            { "name": "platform", "value": "INSTAGRAM" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node_ig_engine",
+      "name": "Cognitive Core Processing Node",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [400, 200]
+    }
+  ],
+  "connections": {
+    "Instagram Direct Inbound Webhook": {
+      "main": [[{ "node": "Cognitive Core Processing Node", "type": "main", "index": 0 }]]
+    }
+  }
+}

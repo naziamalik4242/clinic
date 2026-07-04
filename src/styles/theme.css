@@ -1,0 +1,41 @@
+@layer base {
+  :root {
+    /* Pure Minimalist Light Theme Tokens */
+    --background: 0 0% 100%;
+    --foreground: 200 15% 10%;
+    
+    --card: 0 0% 98%;
+    --card-foreground: 200 15% 12%;
+    
+    --primary: 210 20% 12%;
+    --primary-foreground: 0 0% 98%;
+    
+    --accent: 36 25% 45%; /* Deep Bronze Accent */
+    --accent-foreground: 0 0% 100%;
+    
+    --border: 200 10% 90%;
+    --glass-bg: rgba(255, 255, 255, 0.45);
+    --glass-border: rgba(0, 0, 0, 0.06);
+    --glow: rgba(0, 0, 0, 0.02);
+  }
+
+  .dark {
+    /* Deep Cinematic Luxury Dark Theme Tokens */
+    --background: 240 10% 4%;
+    --foreground: 0 0% 95%;
+    
+    --card: 240 10% 6%;
+    --card-foreground: 0 0% 98%;
+    
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 10% 4%;
+    
+    --accent: 36 30% 60%; /* Warm Muted Luxury Gold/Bronze Accent */
+    --accent-foreground: 240 10% 4%;
+    
+    --border: 240 5% 12%;
+    --glass-bg: rgba(10, 10, 12, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.05);
+    --glow: rgba(212, 175, 55, 0.03); /* Soft Gold Halo Radiance */
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "clinic_metadata": {
+    "brand_id": "aura_clinic_core",
+    "legal_name": "AuraClinic Medical Aesthetics Ltd.",
+    "contact": {
+      "phone_e164": "+923001112233",
+      "email_support": "concierge@auraclinic.com",
+      "emergency_line": "+923219998877"
+    },
+    "booking_rules": {
+      "max_slots_per_hour": 3,
+      "minimum_advance_notice_hours": 12,
+      "auto_confirm_ai_appointments": true
+    },
+    "supported_platforms": [
+      "WHATSAPP",
+      "INSTAGRAM",
+      "MESSENGER"
+    ]
+  }
+}

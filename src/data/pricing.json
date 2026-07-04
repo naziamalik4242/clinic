@@ -1,0 +1,28 @@
+{
+  "pricing_matrix": {
+    "currency": "USD",
+    "tiers": [
+      {
+        "treatment_id": "tx_laser",
+        "single_session": 150,
+        "package_3_sessions": 400,
+        "package_6_sessions": 750,
+        "notes": "Prices vary slightly depending on specified targeting surface areas (Full Body vs Facial segments)."
+      },
+      {
+        "treatment_id": "tx_hydrafacial",
+        "single_session": 180,
+        "package_3_sessions": 480,
+        "package_6_sessions": 900,
+        "notes": "Includes premium booster serums allocation customization rules dynamically adjusted."
+      },
+      {
+        "treatment_id": "tx_peel",
+        "single_session": 120,
+        "package_3_sessions": 320,
+        "package_6_sessions": 600,
+        "notes": "Pre-treatment prep kit is recommended and priced independently."
+      }
+    ]
+  }
+}

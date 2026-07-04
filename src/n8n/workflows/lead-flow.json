@@ -1,0 +1,86 @@
+{
+  "name": "AI-Receptionist: Lead Management Flow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "v1/leads/capture",
+        "options": {}
+      },
+      "id": "node_webhook_lead_inbound",
+      "name": "Webhook: Inbound Lead",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.body.phone }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "node_switch_validate_data",
+      "name": "Validate Phone Node",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/api/v1/internal/lead-score",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "name", "value": "={{ $json.body.name }}" },
+            { "name": "phone", "value": "={{ $json.body.phone }}" },
+            { "name": "source", "value": "={{ $json.body.source }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node_http_app_ledger",
+      "name": "Sync to App Core Engine",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [680, 200]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": "={{ $env.GOOGLE_BACKUP_SHEET_ID }}",
+        "sheetName": "Global Leads",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ new Date().toISOString() }}",
+            "Name": "={{ $('Webhook: Inbound Lead').item.json.body.name }}",
+            "Phone": "={{ $('Webhook: Inbound Lead').item.json.body.phone }}",
+            "Source": "={{ $('Webhook: Inbound Lead').item.json.body.source }}"
+          }
+        }
+      },
+      "id": "node_sheets_backup",
+      "name": "Append to Backup Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [900, 200]
+    }
+  ],
+  "connections": {
+    "Webhook: Inbound Lead": {
+      "main": [[{ "node": "Validate Phone Node", "type": "main", "index": 0 }]]
+    },
+    "Validate Phone Node": {
+      "main": [[{ "node": "Sync to App Core Engine", "type": "main", "index": 0 }]]
+    },
+    "Sync to App Core Engine": {
+      "main": [[{ "node": "Append to Backup Sheets", "type": "main", "index": 0 }]]
+    }
+  }
+}

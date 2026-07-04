@@ -1,0 +1,28 @@
+{
+  "treatments": [
+    {
+      "id": "tx_laser",
+      "name": "Laser Hair Removal",
+      "duration_minutes": 45,
+      "downtime": "Zero downtime. Slight transient redness may persist for 1-2 hours.",
+      "recommended_sessions": 6,
+      "description": "Advanced triple-wavelength cooling laser system targeting follicular structures safely across all skin prototypes."
+    },
+    {
+      "id": "tx_hydrafacial",
+      "name": "HydraFacial Pro Max",
+      "duration_minutes": 60,
+      "downtime": "Immediate skin radiance. No side effects.",
+      "recommended_sessions": 1,
+      "description": "Multi-step hydro-dermabrasion vortex cleansing, painless mechanical extractions, and deep antioxidant hydration infusion."
+    },
+    {
+      "id": "tx_peel",
+      "name": "Medical Chemical Peel",
+      "duration_minutes": 30,
+      "downtime": "Mild scaling and light flaking observed over 3 to 5 operational days.",
+      "recommended_sessions": 3,
+      "description": "Controlled alpha-hydroxy acid layer solutions to safely resurface skin cell structures and purge pigmentation."
+    }
+  ]
+}

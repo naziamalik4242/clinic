@@ -1,0 +1,69 @@
+{
+  "name": "AI-Receptionist: Meta WhatsApp Channel Routing",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "v1/webhook/whatsapp",
+        "options": {}
+      },
+      "id": "node_wa_webhook_in",
+      "name": "WhatsApp Cloud Webhook Inbound",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [150, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/api/v1/chat/incoming",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "phone", "value": "={{ $json.body.entry[0].changes[0].value.messages[0].from }}" },
+            { "name": "message", "value": "={{ $json.body.entry[0].changes[0].value.messages[0].text.body }}" },
+            { "name": "platform", "value": "WHATSAPP" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node_wa_engine_process",
+      "name": "Forward to Cognitive Server Engine",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [400, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v17.0/{{ $env.META_PHONE_NUMBER_ID }}/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "bodyParameters": {
+          "parameters": [
+            { "name": "messaging_product", "value": "whatsapp" },
+            { "name": "to", "value": "={{ $('Forward to Cognitive Server Engine').item.json.targetPhone }}" },
+            { "name": "type", "value": "text" },
+            { "name": "text", "value": "={ \"body\": \"{{ $json.responseText }}\" }" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node_wa_outbound_dispatch",
+      "name": "Dispatched Outbound Framework",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [650, 300]
+    }
+  ],
+  "connections": {
+    "WhatsApp Cloud Webhook Inbound": {
+      "main": [[{ "node": "Forward to Cognitive Server Engine", "type": "main", "index": 0 }]]
+    },
+    "Forward to Cognitive Server Engine": {
+      "main": [[{ "node": "Dispatched Outbound Framework", "type": "main", "index": 0 }]]
+    }
+  }
+}

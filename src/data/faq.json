@@ -1,0 +1,22 @@
+{
+  "faqs": [
+    {
+      "id": "faq_01",
+      "category": "General",
+      "question": "Where is AuraClinic located and what are your operational hours?",
+      "answer": "AuraClinic is situated at Premium Avenue, Phase 5, DHA. We are operational Monday through Saturday from 11:00 AM to 8:00 PM."
+    },
+    {
+      "id": "faq_02",
+      "category": "Booking",
+      "question": "Can I cancel or reschedule my appointment slot late?",
+      "answer": "Yes, but we require a minimum of 24 hours advance notice for any adjustments or cancellation transformations to avoid a scheduling fee allocation."
+    },
+    {
+      "id": "faq_03",
+      "category": "Payments",
+      "question": "What payment channels do you support?",
+      "answer": "We accept all major Credit/Debit Cards, Bank Transfers, and Cash on Delivery for specialized medical skin care products packages."
+    }
+  ]
+}

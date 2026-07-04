@@ -1,0 +1,60 @@
+{
+  "name": "AI-Receptionist: Appointment Scheduling Synchronization",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "v1/appointments/book",
+        "options": {}
+      },
+      "id": "node_webhook_appt_book",
+      "name": "Webhook: Appt Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [200, 250]
+    },
+    {
+      "parameters": {
+        "calendar": "primary",
+        "start": "={{ $json.body.isoDateTime }}",
+        "end": "={{ new Date(new Date($json.body.isoDateTime).getTime() + 45*60000).toISOString() }}",
+        "summary": "={{ $json.body.procedure }} - {{ $json.body.patientName }}",
+        "description": "Brought to you by AI-Receptionist Ledger Node Pipeline.",
+        "additionalFields": {}
+      },
+      "id": "node_gcal_insert",
+      "name": "Google Calendar Integration",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 2,
+      "position": [420, 250]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/api/v1/appointments/confirm-callback",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "patientId", "value": "={{ $('Webhook: Appt Trigger').item.json.body.patientId }}" },
+            { "name": "calendarEventId", "value": "={{ $json.id }}" },
+            { "name": "htmlLink", "value": "={{ $json.htmlLink }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node_http_confirm_callback",
+      "name": "Callback to Primary App Data Node",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [650, 250]
+    }
+  ],
+  "connections": {
+    "Webhook: Appt Trigger": {
+      "main": [[{ "node": "Google Calendar Integration", "type": "main", "index": 0 }]]
+    },
+    "Google Calendar Integration": {
+      "main": [[{ "node": "Callback to Primary App Data Node", "type": "main", "index": 0 }]]
+    }
+  }
+}
